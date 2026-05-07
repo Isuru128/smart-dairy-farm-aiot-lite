@@ -348,7 +348,7 @@ The platform is designed to support:
 
 ---
 
-# License/+-
+# License
 
 This project is developed for educational, research, and enterprise portfolio purposes.
 
