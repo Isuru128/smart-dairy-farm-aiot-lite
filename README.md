@@ -2,7 +2,7 @@
 
 ## Enterprise Smart Dairy Farm Management System with AI & IoT Integration
 
-DairyFarm AIoT Platform is an enterprise-level dairy farm management ecosystem designed for modern large-scale dairy farms managing 400+ cows.
+DairyFarm AIoT Platform is an enterprise-level dairy farm management ecosystem designed for modern large-scale dairy farms managing 100+ cows.
 
 The platform integrates:
 
@@ -284,33 +284,41 @@ git clone https://github.com/Isuru128/smart-dairy-farm-aiot-lite.git
 
 # Backend Setup
 
+```Bash
 cd backend
 npm install
 npm run dev
+```
 
 ---
 
 # Frontend Setup
 
+```Bash
 cd frontend
 npm install
 npm run dev
+```
 
 ---
 
 # AI Service Setup
 
+```Bash
 cd ai-service
 pip install -r requirements.txt
 uvicorn main:app --reload
+```
 
 ---
 
 # Mobile App Setup
 
+```Bash
 cd mobile-app
 npm install
 npx expo start
+```
 
 ---
 
