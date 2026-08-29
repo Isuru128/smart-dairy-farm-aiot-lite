@@ -1,367 +1,167 @@
-# DairyFarm AIoT Platform
+# NexaDairy (pvt) Ltd. - Smart Farm AIoT Platform
 
 ## Enterprise Smart Dairy Farm Management System with AI & IoT Integration
 
-DairyFarm AIoT Platform is an enterprise-level dairy farm management ecosystem designed for modern large-scale dairy farms managing 100+ cows.
+**NexaDairy (pvt) Ltd.** is an enterprise-grade smart dairy farm management ecosystem designed for modern precision livestock operations, automated milking facilities, and real-time IoT monitoring.
 
 The platform integrates:
-
-- Artificial Intelligence (AI)
-- IoT Automation
-- Real-Time Monitoring
-- Cloud Infrastructure
-- Mobile Management
-- Smart Analytics
-
-to optimize dairy farm productivity, operational efficiency, and livestock management.
+- **Artificial Intelligence (AI)** for milk yield forecasting, disease risk evaluation, and feed ration optimization.
+- **IoT Sensor Telemetry & Automation** with ESP32 microcontrollers, DHT22 climate sensors, ultrasonic tank sensors, and automated gate actuators.
+- **Virtual IoT Hardware Simulator** allowing complete real-time end-to-end testing without physical microcontrollers.
+- **Role-Based Access Control (RBAC)** & JWT token authentication.
+- **Financial & Operations Management** tailored for enterprise dairy reporting (in Sri Lankan Rupees - `LKR`).
 
 ---
 
-# Key Features
+## Current Project Status
 
-## Livestock Management
-
-- RFID-based cow identification
-- Cow profile management
-- Breed and health tracking
-- Vaccination records
-- Pregnancy & breeding management
-- Weight and production history
-
----
-
-## Milk Production Management
-
-- Automated milk quantity recording
-- Morning/evening milking sessions
-- Milk production analytics
-- Daily/monthly reports
-- AI milk yield prediction
+| Module | Status | Details |
+| :--- | :---: | :--- |
+| **Node.js Backend API** | ✅ **Active** | Express REST API, JWT Auth, Mongoose schemas, centralized error handling, and DNS fallback for MongoDB Atlas. |
+| **React Web Dashboard** | ✅ **Active** | React 18, Vite, Tailwind CSS, Lucide Icons, Recharts, fixed static sidebar, and protected routes. |
+| **Admin Authentication Portal** | ✅ **Active** | High-definition split-screen landscape visual with right-side sign-in card and logout confirmation modal. |
+| **Livestock Management** | ✅ **Active** | 15 registered cattle (`COW-RFID-101` – `COW-RFID-115`), breed records, health, lactation stages, and vaccination history. |
+| **Milk Production & Yield** | ✅ **Active** | Milking sessions (Morning/Evening), fat & protein content tracking, and weekly aggregate analytics. |
+| **IoT Sensor Telemetry** | ✅ **Active** | Live DHT22 barn climate, water levels, air quality index, and automated fan / refill relay triggers. |
+| **Virtual Hardware Simulator** | ✅ **Active** | In-browser interactive simulation console + standalone CLI daemon (`npm run simulate:iot`). |
+| **Smart Feeding & Grazing** | ✅ **Active** | Automated pasture gates, feeding schedules, and remote actuator triggers. |
+| **AI Predictive Analytics** | ✅ **Active** | Heuristic & FastAPI yield prediction, disease risk analysis, and optimal feed ration suggestions. |
+| **Inventory & Staff Operations**| ✅ **Active** | Feed stock, veterinary medication reorder levels, employee shift rosters, and task dispatching. |
+| **Financial Management** | ✅ **Active** | Monthly revenue, feed expenses, cashflow analytics, and transaction logs in Sri Lankan Rupees (`LKR`). |
 
 ---
 
-## IoT Integration
-
-- Real-time sensor monitoring
-- Temperature and humidity tracking
-- Water tank monitoring
-- Barn environmental monitoring
-- Smart automation systems
-
----
-
-## Smart Feeding & Grazing Automation
-
-- Automated gate opening/closing
-- Scheduled grazing system
-- Motor & relay integration
-- Feed optimization recommendations
-- Smart feeding analytics
-
----
-
-## AI & Predictive Analytics
-
-- Milk production forecasting
-- Disease risk prediction
-- Feeding recommendations
-- Farm profitability analytics
-- Operational performance insights
-
----
-
-## Inventory Management
-
-- Feed inventory tracking
-- Medicine inventory
-- Equipment management
-- Supplier management
-
----
-
-## Employee & Operations Management
-
-- Staff management
-- Attendance tracking
-- Shift scheduling
-- Task assignments
-- Operator tracking
-
----
-
-## Financial Management
-
-- Expense tracking
-- Milk sales management
-- Revenue analytics
-- Profitability reports
-
----
-
-## Alerts & Notifications
-
-- Sensor anomaly alerts
-- Low production alerts
-- Vaccination reminders
-- Feeding reminders
-- Emergency notifications
-
----
-
-## Mobile Application
-
-- Real-time farm monitoring
-- Production statistics
-- Sensor status tracking
-- Remote automation controls
-- Push notifications
-
----
-
-# System Architecture
+## System Architecture
 
 ```text
-IoT Devices & Sensors
-        ↓
-ESP32 / Raspberry Pi Controllers
-        ↓
-HTTP APIs / MQTT Broker
-        ↓
-Node.js + Express Backend
-        ↓
-MongoDB Atlas Cloud Database
-        ↓
-FastAPI AI Service
-        ↓
-React Web Dashboard / React Native Mobile App
+       [ Virtual IoT Simulator / ESP32 Physical Nodes ]
+                              ↓
+                [ HTTP Telemetry / MQTT Stream ]
+                              ↓
+              [ Node.js + Express REST Backend ]
+                              ↓
+             [ MongoDB Atlas Cloud Database ]
+                              ↓
+         [ FastAPI AI Machine Learning Microservice ]
+                              ↓
+            [ NexaDairy React.js Web Dashboard ]
 ```
 
 ---
 
-# Technology Stack
+## Technology Stack
 
-## Frontend Web
+### Frontend Web Application
+- **React.js 18** (Single Page Application)
+- **Vite 6** (Blazing fast build & HMR)
+- **Tailwind CSS 3** (Custom glassmorphism, responsive themes)
+- **Axios** (API client with JWT bearer interceptors)
+- **Recharts** (Interactive production & financial trend charts)
+- **Lucide React** (Modern enterprise icon pack)
 
-- React.js
-- Vite
-- Tailwind CSS
-- Axios
-- Recharts
-
----
-
-## Backend API
-
-- Node.js
-- Express.js
-- JWT Authentication
-- REST APIs
-- WebSockets
+### Backend API Service
+- **Node.js & Express.js**
+- **MongoDB Atlas & Mongoose** (With automatic DNS SRV fallback resolvers)
+- **JSON Web Tokens (JWT)** for secure session handling
+- **Crypto-secure secret generators**
 
 ---
 
-## Database
+## Registered Cattle Herd (`COW-RFID-101` – `COW-RFID-115`)
 
-- MongoDB Atlas
-
----
-
-## AI Service
-
-- Python FastAPI
-- scikit-learn
-- pandas
-- NumPy
-
----
-
-## Mobile Application
-
-- React Native
-- Expo
-
----
-
-## IoT Hardware
-
-- ESP32
-- Raspberry Pi
-- RFID Readers
-- DHT22 Sensors
-- Load Cells
-- Servo Motors
-- Relay Modules
+| Tag ID | Name | Breed | Weight | Health Status | Lactation | Barn Location |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| `COW-RFID-101` | Bella | Holstein Friesian | 580 kg | Healthy | Early | Barn A - Stall 01 |
+| `COW-RFID-102` | Daisy | Jersey | 460 kg | Lactating | Mid | Barn A - Stall 02 |
+| `COW-RFID-103` | Luna | Holstein Friesian | 520 kg | Pregnant | Dry | Barn B - Maternity |
+| `COW-RFID-104` | Rosie | Ayrshire | 490 kg | Healthy | Mid | Barn A - Stall 04 |
+| `COW-RFID-105` | Buttercup | Jersey | 440 kg | Lactating | Early | Barn A - Stall 05 |
+| `COW-RFID-106` | Molly | Holstein Friesian | 595 kg | Healthy | Early | Barn A - Stall 06 |
+| `COW-RFID-107` | Clara | Brown Swiss | 560 kg | Lactating | Mid | Barn A - Stall 07 |
+| `COW-RFID-108` | Ruby | Sahiwal | 480 kg | Healthy | Early | Barn A - Stall 08 |
+| `COW-RFID-109` | Maple | Jersey | 450 kg | Healthy | Late | Barn A - Stall 09 |
+| `COW-RFID-110` | Penny | Holstein Friesian | 610 kg | Lactating | Early | Barn A - Stall 10 |
+| `COW-RFID-111` | Clover | Ayrshire | 510 kg | Pregnant | Dry | Barn B - Maternity |
+| `COW-RFID-112` | Hazel | Brown Swiss | 545 kg | Healthy | Mid | Barn A - Stall 12 |
+| `COW-RFID-113` | Stella | Holstein Friesian | 575 kg | Under Treatment | Late | Barn C - Isolation |
+| `COW-RFID-114` | Ginger | Jersey | 430 kg | Healthy | Early | Barn A - Stall 14 |
+| `COW-RFID-115` | Willow | Sahiwal | 495 kg | Healthy | Mid | Barn A - Stall 15 |
 
 ---
 
-## Deployment
+## Installation & Running Guide
 
-- Vercel
-- Render
-- Railway
-- MongoDB Atlas
-
----
-
-# User Roles
-
-| Role              | Permissions                |
-| ----------------- | -------------------------- |
-| Super Admin       | Full system access         |
-| Farm Manager      | Farm operations management |
-| Veterinarian      | Health management          |
-| Employee          | Operational activities     |
-| Financial Officer | Financial management       |
-
----
-
-# AI Features
-
-- Milk production prediction
-- Disease risk analysis
-- Feed optimization recommendations
-- Smart operational analytics
-- Profit estimation
-
----
-
-# IoT Features
-
-## RFID Tracking
-
-Automatically identify cows using RFID ear tags.
-
-## Smart Milk Monitoring
-
-Track milk production using load cells and milk flow sensors.
-
-## Smart Feeding Automation
-
-Automated gate control system based on schedules and AI recommendations.
-
-## Environmental Monitoring
-
-Monitor:
-
-- Temperature
-- Humidity
-- Water levels
-- Barn environment
-
----
-
-# Project Structure
-
-dairy-farm-ai-iot-platform/
-│
-├── frontend/ # React frontend
-├── backend/ # Node.js + Express backend
-├── ai-service/ # FastAPI AI service
-├── mobile-app/ # React Native mobile app
-├── iot-firmware/ # ESP32 / Raspberry Pi firmware
-├── database/ # Database schemas and configs
-├── docs/ # Documentation
-├── deployment/ # Deployment configurations
-└── assets/ # Images and static assets
-
----
-
-# API Documentation
-
-API documentation will be available using Swagger/OpenAPI.
-
-http://localhost:5000/api-docs
-
----
-
-# Installation Guide
-
-## Clone Repository
-
+### 1. Clone the Repository
+```bash
 git clone https://github.com/Isuru128/smart-dairy-farm-aiot-lite.git
+cd smart-dairy-farm-aiot-lite
+```
 
----
-
-# Backend Setup
-
-```Bash
+### 2. Backend Setup
+```bash
 cd backend
 npm install
+```
+
+Configure your `backend/.env` file:
+```env
+PORT=5000
+NODE_ENV=development
+MONGO_URI=mongodb+srv://<username>:<password>@<cluster>.mongodb.net/dairyfarm?retryWrites=true&w=majority
+JWT_SECRET=your_jwt_secret_key_here
+JWT_EXPIRES_IN=24h
+AI_SERVICE_URL=http://localhost:8000
+CORS_ORIGIN=http://localhost:5173
+```
+
+Start the backend server:
+```bash
+npm start
+# or for live reloading during development:
 npm run dev
 ```
 
----
-
-# Frontend Setup
-
-```Bash
-cd frontend
+### 3. Frontend Setup
+```bash
+cd ../frontend
 npm install
 npm run dev
 ```
+Open your browser at `http://localhost:5173`.
 
 ---
 
-# AI Service Setup
+## IoT Testing & Hardware Simulation
 
-```Bash
-cd ai-service
-pip install -r requirements.txt
-uvicorn main:app --reload
+You can test real-time sensor streams and automated event triggers without physical hardware using either method below:
+
+### Option A: In-Browser Virtual Hardware Console
+1. Open the dashboard and navigate to **IoT Sensors** (`/iot-sensors`).
+2. Click **"Start Virtual Auto-Stream"** to stream live ESP32 telemetries (DHT22 climate, water tank levels).
+3. Test RFID ear tag scanning by selecting any cow from the dropdown and clicking **"Simulate Scan"**.
+4. Test automated threshold triggers using **"🔥 High Temp (31.8°C)"** or **"💧 Low Water (14%)"**.
+
+### Option B: Standalone CLI IoT Simulator
+From the `backend/` directory:
+```bash
+npm run simulate:iot
 ```
 
 ---
 
-# Mobile App Setup
+## User Roles & Permissions
 
-```Bash
-cd mobile-app
-npm install
-npx expo start
-```
-
----
-
-# Future Improvements
-
-- Drone-based farm monitoring
-- Computer vision cattle recognition
-- Robotic milking integration
-- MQTT real-time architecture
-- Smart weather integration
-- Advanced AI disease detection
+| Role | Access Level |
+| :--- | :--- |
+| **Super Admin** | Unrestricted access across all operational, financial, and hardware configurations |
+| **Farm Manager** | Livestock, milking stations, IoT telemetries, feeding gates, and staff schedules |
+| **Veterinarian** | Herd health profiles, quarantine logs, disease risk analysis, and vaccination entries |
+| **Financial Officer**| Financial cashflow analytics, milk sales revenue, and inventory cost audits |
+| **Employee** | Daily milking logs, assigned chore checklists, and gate schedule views |
 
 ---
 
-# Security Features
+## License & Organization
 
-- JWT authentication
-- Role-based authorization
-- Secure API validation
-- Environment-based configuration
-- Protected routes
-- Secure cloud deployment
-
----
-
-# Scalability Goals
-
-The platform is designed to support:
-
-- 100+ cows
-- Multiple farm locations
-- Real-time sensor data
-- Intermediate-scale analytics
-- Future microservice expansion
-
----
-
-# License
-
-This project is developed for educational, research, and enterprise portfolio purposes.
-
----
-
-# Author
-
-Developed by Isuru Dulanjaya
+Developed for **NexaDairy (pvt) Ltd.** by Isuru Rathnayake.
+All rights reserved © 2026.
