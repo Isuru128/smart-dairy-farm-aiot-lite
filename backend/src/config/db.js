@@ -1,29 +1,32 @@
 const mongoose = require('mongoose');
+const dns = require('dns');
+
+// Configure reliable DNS servers (Google DNS + Cloudflare) to prevent Windows SRV ECONNREFUSED resolution errors on Atlas
+try {
+  dns.setServers(['8.8.8.8', '8.8.4.4', '1.1.1.1']);
+} catch (e) {
+  // Ignore if running in restricted environments
+}
 
 const connectDB = async () => {
   try {
     const mongoUri = process.env.MONGO_URI;
-    
-    const connectionPromise = mongoose.connect(mongoUri, {
-      connectTimeoutMS: 5000,
-      serverSelectionTimeoutMS: 5000,
+
+    if (!mongoUri) {
+      throw new Error('MONGO_URI is not defined in environment variables');
+    }
+
+    const conn = await mongoose.connect(mongoUri, {
+      connectTimeoutMS: 10000,
+      serverSelectionTimeoutMS: 10000,
     });
 
-    // Set a timeout for connection attempts
-    const timeoutPromise = new Promise((_, reject) => 
-      setTimeout(() => reject(new Error('Connection timeout')), 5000)
-    );
-
-    await Promise.race([connectionPromise, timeoutPromise]);
-
-    console.log('✓ Database connected successfully');
-
-    return mongoose.connection;
+    console.log(`✓ MongoDB Connected successfully: ${conn.connection.host}`);
+    return conn.connection;
   } catch (error) {
     console.warn('⚠ Database connection unavailable');
     console.warn(`  Note: ${error.message}`);
-    
-    // Continue server startup without database
+    console.warn('  (Make sure MongoDB Atlas IP Whitelist is set to allow access: Network Access -> Add 0.0.0.0/0 or Current IP)');
     return null;
   }
 };
