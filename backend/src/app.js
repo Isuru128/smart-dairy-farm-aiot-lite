@@ -5,30 +5,33 @@ const dotenv = require('dotenv');
 // Load environment variables
 dotenv.config();
 
+const apiRoutes = require('./routes');
+const { errorHandler, notFoundHandler } = require('./middleware/errorHandler');
+
 const app = express();
 
 // Middleware
-app.use(cors({ origin: true }));
+app.use(cors({ origin: true, credentials: true }));
 app.use(express.json());
-
-// Routes
-const authRoutes = require('./routes/auth');
-app.use('/api/auth', authRoutes);
+app.use(express.urlencoded({ extended: true }));
 
 // Health check
 app.get('/health', (req, res) => {
-    res.json({ status: 'OK', message: 'DairyFarm AIoT Backend is running' });
+  res.json({
+    status: 'OK',
+    service: 'DairyFarm AIoT Backend',
+    timestamp: new Date().toISOString(),
+    uptime: process.uptime(),
+  });
 });
 
-// 404 handler
-app.use('*', (req, res) => {
-    res.status(404).json({ success: false, message: 'Route not found' });
-});
+// Mount all API routes under /api
+app.use('/api', apiRoutes);
 
-// Error handler
-app.use((err, req, res, next) => {
-    console.error(err.stack);
-    res.status(500).json({ success: false, message: 'Internal server error' });
-});
+// Fallback 404 handler
+app.use(notFoundHandler);
+
+// Centralized Error handler
+app.use(errorHandler);
 
 module.exports = app;

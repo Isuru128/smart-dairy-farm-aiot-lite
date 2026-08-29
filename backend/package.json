@@ -6,6 +6,9 @@
   "scripts": {
     "start": "node server.js",
     "dev": "nodemon server.js",
+    "generate-token": "node scripts/generateToken.js",
+    "seed:cows": "node scripts/seedCows.js",
+    "simulate:iot": "node scripts/simulateIoT.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
