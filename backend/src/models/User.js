@@ -5,7 +5,7 @@ const users = [
     username: 'admin',
     password: 'admin123',
     role: 'super-admin',
-    displayName: 'DairyFarm Admin',
+    displayName: 'NexaDairy Admin',
   },
 ];
 
