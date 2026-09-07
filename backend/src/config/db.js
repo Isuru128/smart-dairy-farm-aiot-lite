@@ -13,6 +13,10 @@ try {
 
 const connectDB = async () => {
   try {
+    if (mongoose.connection.readyState === 1) {
+      return mongoose.connection;
+    }
+
     const mongoUri = process.env.MONGO_URI;
 
     if (!mongoUri) {
