@@ -1,9 +1,9 @@
-// User model - hardcoded for simplicity
+// User model - supports environment configuration for production
 const users = [
   {
     id: 1,
-    username: 'admin',
-    password: 'admin123',
+    username: process.env.ADMIN_USERNAME || 'admin',
+    password: process.env.ADMIN_PASSWORD || 'admin123',
     role: 'super-admin',
     displayName: 'NexaDairy Admin',
   },
