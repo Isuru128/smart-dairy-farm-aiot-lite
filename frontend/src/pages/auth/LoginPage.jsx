@@ -26,7 +26,11 @@ const LoginPage = () => {
         setError(res.message || 'Login failed');
       }
     } catch (err) {
-      setError(err.message || 'Invalid username or password');
+      if (err.message === 'Network Error' || err.code === 'ERR_NETWORK') {
+        setError('Unable to reach backend server. Please verify the backend is running and VITE_API_BASE_URL is correct.');
+      } else {
+        setError(err.message || 'Invalid username or password');
+      }
     } finally {
       setLoading(false);
     }
