@@ -15,6 +15,16 @@ app.use(cors({ origin: true, credentials: true }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Root endpoint
+app.get('/', (req, res) => {
+  res.json({
+    success: true,
+    message: 'DairyFarm AIoT Backend API is running',
+    health: '/health',
+    api: '/api',
+  });
+});
+
 // Health check
 app.get('/health', (req, res) => {
   res.json({
