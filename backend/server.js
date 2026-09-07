@@ -11,7 +11,7 @@ const startServer = async () => {
     await connectDB();
 
     // Start Express server
-    app.listen(PORT, () => {
+    app.listen(PORT, '0.0.0.0', () => {
       console.log(`✓ Server listening on port ${PORT}`);
       console.log(`✓ DairyFarm AIoT Backend is ready`);
     });
