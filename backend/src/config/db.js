@@ -1,6 +1,9 @@
 const mongoose = require('mongoose');
 const dns = require('dns');
 
+// Disable buffering so queries immediately fallback to mock data rather than hanging for 10 seconds if MongoDB is disconnected
+mongoose.set('bufferCommands', false);
+
 // Configure reliable DNS servers (Google DNS + Cloudflare) to prevent Windows SRV ECONNREFUSED resolution errors on Atlas
 try {
   dns.setServers(['8.8.8.8', '8.8.4.4', '1.1.1.1']);
