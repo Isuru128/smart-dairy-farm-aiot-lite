@@ -3,12 +3,12 @@ const { generateToken } = require('../utils/jwt');
 const ApiResponse = require('../utils/apiResponse');
 
 /**
- * Register / Insert user into MongoDB via Email & Password
+ * Register / Insert user directly into MongoDB
  */
 const register = async (req, res, next) => {
   try {
-    const { email, username, password, role, displayName } = req.body || {};
-    const inputEmail = (email || username || '').trim().toLowerCase();
+    const { email, password, role, displayName } = req.body || {};
+    const inputEmail = (email || '').trim().toLowerCase();
 
     if (!inputEmail || !password) {
       return ApiResponse.error(res, 'Email and password are required', 400);
@@ -50,7 +50,7 @@ const register = async (req, res, next) => {
 };
 
 /**
- * Authenticate user via Email and Password
+ * Authenticate user strictly against MongoDB database (zero passwords in .env)
  */
 const login = async (req, res, next) => {
   try {
@@ -61,37 +61,20 @@ const login = async (req, res, next) => {
       return ApiResponse.error(res, 'Email and password are required', 400);
     }
 
-    // 1. Search in MongoDB User collection by email
-    let user = await User.findOne({ email: inputEmail });
-
-    // 2. Fallback to environment credentials if DB user not yet created
-    const envAdminEmail = (process.env.ADMIN_EMAIL || process.env.ADMIN_USERNAME || '').trim().toLowerCase();
-    const envAdminPassword = process.env.ADMIN_PASSWORD;
-
-    if (!user && envAdminEmail && envAdminPassword) {
-      if (inputEmail === envAdminEmail && password === envAdminPassword) {
-        user = {
-          _id: 'env-admin',
-          email: envAdminEmail,
-          role: 'Admin',
-          displayName: process.env.ADMIN_DISPLAY_NAME || 'Administrator',
-          isEnvFallback: true,
-        };
-      }
-    }
-
+    // Search exclusively in MongoDB
+    const user = await User.findOne({ email: inputEmail });
     if (!user) {
       return ApiResponse.error(res, 'Invalid email or password', 401);
     }
 
-    // Verify password
-    if (user.comparePassword) {
-      const isMatch = await user.comparePassword(password);
-      if (!isMatch) {
-        return ApiResponse.error(res, 'Invalid email or password', 401);
-      }
-    } else if (!user.isEnvFallback && user.password !== password) {
+    // Verify bcrypt password hash
+    const isMatch = await user.comparePassword(password);
+    if (!isMatch) {
       return ApiResponse.error(res, 'Invalid email or password', 401);
+    }
+
+    if (!user.isActive) {
+      return ApiResponse.error(res, 'Account is deactivated. Please contact support.', 403);
     }
 
     const tokenPayload = {
@@ -121,23 +104,11 @@ const login = async (req, res, next) => {
 };
 
 /**
- * Get profile of currently logged-in user
+ * Get profile of currently logged-in user from MongoDB
  */
 const getProfile = async (req, res, next) => {
   try {
-    let user = null;
-
-    if (req.user?.sub === 'env-admin') {
-      const envAdminEmail = (process.env.ADMIN_EMAIL || process.env.ADMIN_USERNAME || '').trim().toLowerCase();
-      user = {
-        _id: 'env-admin',
-        email: envAdminEmail,
-        role: 'Admin',
-        displayName: process.env.ADMIN_DISPLAY_NAME || 'Administrator',
-      };
-    } else {
-      user = await User.findById(req.user?.sub).select('-password');
-    }
+    const user = await User.findById(req.user?.sub).select('-password');
 
     if (!user) {
       return ApiResponse.error(res, 'User not found', 404);
