@@ -12,6 +12,8 @@ export const farmService = {
   getMilkLogs: () => api.get('/milk'),
   getMilkAnalytics: () => api.get('/milk/analytics'),
   recordMilk: (data) => api.post('/milk/record', data),
+  updateMilkLog: (id, data) => api.put(`/milk/${id}`, data),
+  deleteMilkLog: (id) => api.delete(`/milk/${id}`),
 
   // Sensors & IoT
   getLiveSensors: () => api.get('/sensors/live'),
