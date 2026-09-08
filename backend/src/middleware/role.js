@@ -6,7 +6,8 @@ function authorizeRoles(...allowedRoles) {
       return ApiResponse.error(res, 'Authentication required', 401);
     }
 
-    if (req.user.role === 'super-admin') {
+    const roleLower = (req.user.role || '').toLowerCase();
+    if (roleLower === 'admin') {
       return next();
     }
 
