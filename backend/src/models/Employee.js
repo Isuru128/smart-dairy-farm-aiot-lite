@@ -7,7 +7,7 @@ const EmployeeSchema = new mongoose.Schema(
     phone: { type: String, required: true },
     role: {
       type: String,
-      enum: ['Super Admin', 'Farm Manager', 'Veterinarian', 'Employee', 'Financial Officer'],
+      enum: ['Admin', 'Farm Manager', 'Veterinarian', 'Employee', 'Financial Officer'],
       default: 'Employee',
     },
     shift: {
