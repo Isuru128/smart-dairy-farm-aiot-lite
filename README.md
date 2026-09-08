@@ -153,7 +153,7 @@ npm run simulate:iot
 
 | Role | Access Level |
 | :--- | :--- |
-| **Super Admin** | Unrestricted access across all operational, financial, and hardware configurations |
+| **Admin** | Unrestricted access across all operational, financial, and hardware configurations |
 | **Farm Manager** | Livestock, milking stations, IoT telemetries, feeding gates, and staff schedules |
 | **Veterinarian** | Herd health profiles, quarantine logs, disease risk analysis, and vaccination entries |
 | **Financial Officer**| Financial cashflow analytics, milk sales revenue, and inventory cost audits |
