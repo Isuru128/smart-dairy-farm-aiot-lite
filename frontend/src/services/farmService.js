@@ -5,6 +5,8 @@ export const farmService = {
   getCows: () => api.get('/cows'),
   getCowDetails: (tagId) => api.get(`/cows/${tagId}`),
   createCow: (data) => api.post('/cows', data),
+  updateCow: (id, data) => api.put(`/cows/${id}`, data),
+  deleteCow: (id) => api.delete(`/cows/${id}`),
 
   // Milk
   getMilkLogs: () => api.get('/milk'),
