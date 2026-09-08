@@ -1,5 +1,5 @@
 const ROLES = {
-  SUPER_ADMIN: 'super-admin',
+  ADMIN: 'Admin',
   FARM_MANAGER: 'farm-manager',
   VETERINARIAN: 'veterinarian',
   EMPLOYEE: 'employee',
@@ -7,7 +7,7 @@ const ROLES = {
 };
 
 const ROLE_PERMISSIONS = {
-  [ROLES.SUPER_ADMIN]: ['*'],
+  [ROLES.ADMIN]: ['*'],
   [ROLES.FARM_MANAGER]: ['livestock:*', 'milk:*', 'sensors:*', 'feeding:*', 'inventory:*', 'operations:*', 'finance:read', 'alerts:*', 'ai:*'],
   [ROLES.VETERINARIAN]: ['livestock:*', 'health:*', 'vaccination:*', 'alerts:read'],
   [ROLES.EMPLOYEE]: ['livestock:read', 'milk:write', 'feeding:read', 'operations:read'],
