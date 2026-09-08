@@ -23,12 +23,22 @@ export const farmService = {
 
   // Inventory
   getInventory: () => api.get('/inventory'),
+  createInventoryItem: (data) => api.post('/inventory', data),
+  updateInventoryItem: (id, data) => api.put(`/inventory/${id}`, data),
+  updateInventoryStock: (id, quantity) => api.put(`/inventory/${id}/stock`, { quantity }),
+  deleteInventoryItem: (id) => api.delete(`/inventory/${id}`),
 
   // Employees
   getEmployees: () => api.get('/employees'),
+  createEmployee: (data) => api.post('/employees', data),
+  updateEmployee: (id, data) => api.put(`/employees/${id}`, data),
+  deleteEmployee: (id) => api.delete(`/employees/${id}`),
 
   // Financials
   getFinancials: () => api.get('/finance/overview'),
+  createTransaction: (data) => api.post('/finance/transactions', data),
+  updateTransaction: (id, data) => api.put(`/finance/transactions/${id}`, data),
+  deleteTransaction: (id) => api.delete(`/finance/transactions/${id}`),
 
   // Alerts
   getAlerts: () => api.get('/alerts'),
