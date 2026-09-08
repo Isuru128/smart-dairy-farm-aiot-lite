@@ -1,8 +1,8 @@
 import api from './api';
 
 export const authService = {
-  login: async (username, password) => {
-    const response = await api.post('/auth/login', { username, password });
+  login: async (email, password) => {
+    const response = await api.post('/auth/login', { email, password });
     if (response.success && response.data?.accessToken) {
       localStorage.setItem('dairyfarm_token', response.data.accessToken);
       localStorage.setItem('dairyfarm_user', JSON.stringify(response.data.user));
