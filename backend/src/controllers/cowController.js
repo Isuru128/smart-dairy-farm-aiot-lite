@@ -268,14 +268,56 @@ const getCowByTagId = async (req, res, next) => {
 
 const createCow = async (req, res, next) => {
   try {
-    const cowData = req.body;
+    const {
+      tagId,
+      name,
+      breed,
+      birthDate,
+      gender = 'Female',
+      weightKg,
+      healthStatus = 'Healthy',
+      lactationStage = 'Early',
+      barnLocation = 'Barn A - Section 1',
+      dailyAverageYieldLiters = 0,
+    } = req.body || {};
+
+    if (!tagId || !name || !breed) {
+      return ApiResponse.error(res, 'RFID Tag ID, Name, and Breed are required', 400);
+    }
+
+    const cleanTagId = tagId.trim().toUpperCase();
+
+    // Check duplicate
+    try {
+      const existing = await Cow.findOne({ tagId: cleanTagId });
+      if (existing) {
+        return ApiResponse.error(res, `Cattle with Tag ID "${cleanTagId}" already exists`, 409);
+      }
+    } catch (e) {
+      // ignore if DB is offline
+    }
+
+    const cowPayload = {
+      tagId: cleanTagId,
+      name: name.trim(),
+      breed: breed.trim(),
+      birthDate: birthDate ? new Date(birthDate) : new Date(),
+      gender,
+      weightKg: Number(weightKg) || 450,
+      healthStatus,
+      lactationStage,
+      barnLocation: barnLocation.trim(),
+      dailyAverageYieldLiters: Number(dailyAverageYieldLiters) || 0,
+    };
+
     let created = null;
     try {
-      created = await Cow.create(cowData);
+      created = await Cow.create(cowPayload);
     } catch (e) {
-      created = { _id: `cow-${Date.now()}`, ...cowData, createdAt: new Date() };
+      created = { _id: `cow-${Date.now()}`, ...cowPayload, createdAt: new Date() };
     }
-    return ApiResponse.success(res, created, 'New cow profile registered', 201);
+
+    return ApiResponse.success(res, created, 'New cattle profile registered successfully', 201);
   } catch (error) {
     next(error);
   }
@@ -284,13 +326,64 @@ const createCow = async (req, res, next) => {
 const updateCow = async (req, res, next) => {
   try {
     const { id } = req.params;
+    const updateData = { ...req.body };
+
+    if (updateData.tagId) {
+      updateData.tagId = updateData.tagId.trim().toUpperCase();
+    }
+    if (updateData.birthDate) {
+      updateData.birthDate = new Date(updateData.birthDate);
+    }
+    if (updateData.weightKg !== undefined) {
+      updateData.weightKg = Number(updateData.weightKg);
+    }
+    if (updateData.dailyAverageYieldLiters !== undefined) {
+      updateData.dailyAverageYieldLiters = Number(updateData.dailyAverageYieldLiters);
+    }
+
     let updated = null;
     try {
-      updated = await Cow.findByIdAndUpdate(id, req.body, { new: true });
+      if (id.match(/^[0-9a-fA-F]{24}$/)) {
+        updated = await Cow.findByIdAndUpdate(id, updateData, { new: true });
+      }
+      if (!updated) {
+        updated = await Cow.findOneAndUpdate({ tagId: id.toUpperCase() }, updateData, { new: true });
+      }
     } catch (e) {
-      updated = { _id: id, ...req.body, updatedAt: new Date() };
+      updated = { _id: id, ...updateData, updatedAt: new Date() };
     }
-    return ApiResponse.success(res, updated, 'Cow profile updated');
+
+    if (!updated) {
+      return ApiResponse.error(res, `Cattle with identifier "${id}" not found`, 404);
+    }
+
+    return ApiResponse.success(res, updated, 'Cattle profile updated successfully');
+  } catch (error) {
+    next(error);
+  }
+};
+
+const deleteCow = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    let deleted = null;
+
+    try {
+      if (id.match(/^[0-9a-fA-F]{24}$/)) {
+        deleted = await Cow.findByIdAndDelete(id);
+      }
+      if (!deleted) {
+        deleted = await Cow.findOneAndDelete({ tagId: id.toUpperCase() });
+      }
+    } catch (e) {
+      deleted = { _id: id };
+    }
+
+    if (!deleted) {
+      return ApiResponse.error(res, `Cattle with identifier "${id}" not found`, 404);
+    }
+
+    return ApiResponse.success(res, { id }, 'Cattle record removed successfully');
   } catch (error) {
     next(error);
   }
@@ -301,4 +394,5 @@ module.exports = {
   getCowByTagId,
   createCow,
   updateCow,
+  deleteCow,
 };
