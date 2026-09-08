@@ -54,8 +54,8 @@ const Header = () => {
                 <User className="w-4 h-4" />
               </div>
               <div className="hidden md:block text-left">
-                <div className="text-xs font-semibold text-white">{user?.displayName || user?.username || 'Farm Admin'}</div>
-                <div className="text-[10px] text-emerald-400 font-medium capitalize">{user?.role || 'Super Admin'}</div>
+                <div className="text-xs font-semibold text-white">{user?.displayName || 'Administrator'}</div>
+                <div className="text-[10px] text-emerald-400 font-medium capitalize">{user?.role || 'Admin'}</div>
               </div>
             </div>
 
